@@ -1,6 +1,13 @@
+# macOS files
 .DS_Store
-.ipynb_checkpoints/
-.Rhistory
 
+# Jupyter notebook checkpoints
+.ipynb_checkpoints/
+
+# Data folders (to avoid uploading large datasets)
 data_processed/
 data_raw/
+
+# Python cache files
+__pycache__/
+*.pyc

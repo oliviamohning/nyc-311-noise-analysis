@@ -1,3 +1,6 @@
 .DS_Store
 .ipynb_checkpoints/
 .Rhistory
+
+data_processed/
+data_raw/

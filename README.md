@@ -15,7 +15,7 @@ This project analyzes NYC 311 noise complaint data to identify spatial and tempo
 - Jupyter Notebooks for exploratory analysis and model development
 
 ## Dataset
-NYC 311 Service Requests filtered to noise complaints (sample dataset: 311_noise_complaints_sample_small.csv). Includes date/time, complaint type, borough, and geolocation information.
+NYC 311 Service Requests filtered to noise complaints (sample dataset: 311_noise_complaints_2024.csv). Includes date/time, complaint type, borough, and geolocation information.
 
 ## Repository Structure
 ```
@@ -28,7 +28,6 @@ nyc-311-noise-analysis/
 ├── assets/                # Images/plots for README and reports
 ├── dashboards/            # Tableau/Power BI dashboards
 ├── reports/               # Project reports or summaries
-├── sql/                   # SQL queries and scripts
 │
 ├── requirements.txt       # Python dependencies
 ├── LICENSE                # Open-source license
@@ -36,7 +35,7 @@ nyc-311-noise-analysis/
 ```
 
 ## Status
-Data cleaning and exploratory analysis in progress (updated August 11, 2025)
+Spatial visualizations in progress (updated August 30, 2025)
 
 ## Next Steps
 - Build baseline time series forecast models (seasonal naive, SARIMA)

@@ -43,11 +43,10 @@ Adding an ETL pipeline using SQL
 - Build baseline time series forecast models (seasonal naive, SARIMA)
 - Evaluate model accuracy and identify high-risk time windows
 - Create a Tableau dashboard for interactive exploration
-- Document results and policy recommendations
 
 ## Getting Started
 This project uses PostgreSQL for data storage and Conda for environment management.  
-Follow the steps below to set up the environment, load the data, and generate the cleaned dataset.
+Follow the steps below to set up the environment, load the data, and generate the cleaned datasets.
 
 ### Prerequisites
 - PostgreSQL installed and accessible via `psql`
@@ -74,16 +73,29 @@ This will:
 2. Run `sql/init_table.sql` to create two tables:  
    - `noise_complaints_2024` (raw, full schema)  
    - `noise_complaints_clean` (slimmed, analysis-ready schema)  
-3. Export `data_processed/noise_complaints_clean.csv` for Tableau or other tools.  
+3. Export the cleaned SQL dataset to `data_processed/noise_complaints_clean_sql.csv`.  
 
-### 3. Verify the output
-Check the processed file in your repo:
+### 3. Generate Python-cleaned dataset (optional)
+You can also use the Jupyter notebook to produce a parallel cleaned dataset:
 
 ```bash
-head data_processed/noise_complaints_clean.csv
+jupyter notebook notebooks/nyc_311_noise_analysis.ipynb
 ```
 
-You can also connect Tableau or Python directly to `data_processed/noise_complaints_clean.csv`.
+The notebook will:  
+- Clean and transform the raw dataset with pandas.  
+- Save an additional file to `data_processed/noise_complaints_clean_py.csv`.  
+- Export key visualizations into `assets/` for use in the README or reports.  
+
+### 4. Verify the outputs
+Check the processed files in your repo:
+
+```bash
+head data_processed/noise_complaints_clean_sql.csv
+head data_processed/noise_complaints_clean_py.csv
+```
+
+You can connect Tableau, Python, or other tools directly to these CSVs.  
 
 ### Notes
 - By default the script uses your system username as the Postgres user.  
@@ -92,3 +104,11 @@ You can also connect Tableau or Python directly to `data_processed/noise_complai
 ```bash
 PGUSER=your_pg_username python scripts/setup_db.py
 ```
+
+## Outputs & Visualizations
+
+### Monthly Noise Complaint Trends (2024)
+![Monthly Noise Trends](assets/monthly_noise_trends_2024.png)
+
+### Geographic Heatmap of Noise Complaints
+![Noise Complaints Heatmap](assets/noise_complaints_geospatial_heatmap_2024.png)

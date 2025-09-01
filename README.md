@@ -1,8 +1,6 @@
 # NYC Noise Complaint Analysis
 
-<p align="center">
-  <img src="assets/kermit.jpg" alt="Kermit is just tired and wants to sleep" width="400"/>
-</p>
+<img src="assets/kermit.jpg" alt="Kermit Noise Complaint Meme" width="200" align="left" />
 
 This project analyzes NYC 311 noise complaint data to uncover spatial and temporal patterns and forecast future complaint volumes. By understanding when and where noise complaints are most likely to occur, city agencies can better allocate enforcement resources and address recurring problem areas. The goal is to help answer questions like:
 - When do most noise complaints occur?

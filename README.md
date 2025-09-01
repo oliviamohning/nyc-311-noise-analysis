@@ -47,36 +47,48 @@ Adding an ETL pipeline using SQL
 - Document results and policy recommendations
 
 ## Getting Started
-This project includes a setup script in `scripts/setup_db.py` that initializes a PostgreSQL database, builds tables, and loads the raw noise complaints data for analysis.
+This project uses PostgreSQL for data storage and Conda for environment management.  
+Follow the steps below to set up the environment, load the data, and generate the cleaned dataset.
 
 ### Prerequisites
-- PostgreSQL installed and accessible via `psql`  
-- Python 3 with Conda (or Mamba) installed  
-- A PostgreSQL user with permission to create databases and tables  
+- PostgreSQL installed and accessible via `psql`
+- Conda (or Mamba) installed
+- A PostgreSQL user with permission to create databases and tables
 
-### Set up the environment
+### 1. Set up the environment
 From the repo root (`nyc-noise/`), create and activate the environment:
 
 ```bash
 conda env create -f environment.yml
-conda activate nyc-noise
+conda activate nycnoise
 ```
 
-### Load the data into PostgreSQL
-Once the environment is active, run:
+### 2. Load data into PostgreSQL
+Run the setup script to create the database, build tables, and load data:
 
 ```bash
 python scripts/setup_db.py
 ```
 
-This will:  
+This will:
 1. Create a database called `nyc_noise` if it does not already exist.  
-2. Run `sql/init_table.sql` to create the `noise_complaints_2024` table.  
-3. Load data from `data_raw/311_noise_complaints_2024.csv`.  
+2. Run `sql/init_table.sql` to create two tables:  
+   - `noise_complaints_2024` (raw, full schema)  
+   - `noise_complaints_clean` (slimmed, analysis-ready schema)  
+3. Export `data_processed/noise_complaints_clean.csv` for Tableau or other tools.  
+
+### 3. Verify the output
+Check the processed file in your repo:
+
+```bash
+head data_processed/noise_complaints_clean.csv
+```
+
+You can also connect Tableau or Python directly to `data_processed/noise_complaints_clean.csv`.
 
 ### Notes
 - By default the script uses your system username as the Postgres user.  
-- To override, set the environment variable `PGUSER` before running the script:  
+- To override, set the environment variable `PGUSER` before running the script:
 
 ```bash
 PGUSER=your_pg_username python scripts/setup_db.py

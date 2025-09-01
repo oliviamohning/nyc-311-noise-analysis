@@ -56,18 +56,13 @@ CREATE TABLE noise_complaints_2024 (
     location TEXT
 );
 
--- Load the raw CSV data into the raw table
--- Uses \copy (psql meta-command) so that relative paths work when running from the repo root
-\copy noise_complaints_2024
-FROM '../data_raw/311_noise_complaints_2024.csv'
-DELIMITER ','
-CSV HEADER;
+-- Load the raw CSV into the raw table
+\copy noise_complaints_2024 FROM 'data_raw/311_noise_complaints_2024.csv' DELIMITER ',' CSV HEADER;
 
 -- Remove the clean table if it exists so we can rebuild it
 DROP TABLE IF EXISTS noise_complaints_clean;
 
 -- Create the clean table with only the columns needed for analysis
--- This makes queries and visualization easier and faster
 CREATE TABLE noise_complaints_clean AS
 SELECT
     created_date,
@@ -80,9 +75,8 @@ SELECT
     location
 FROM noise_complaints_2024;
 
--- Export the cleaned table to a new CSV file
--- Saved in data_processed/ so it’s ready for Tableau or other tools
-\copy noise_complaints_clean TO '../data_processed/noise_complaints_clean.csv' CSV HEADER;
+-- Export the cleaned table
+\copy noise_complaints_clean TO 'data_processed/noise_complaints_clean_sql.csv' CSV HEADER;
 
 -- Show a small sample of the clean table for quick verification
 SELECT * FROM noise_complaints_clean LIMIT 10;

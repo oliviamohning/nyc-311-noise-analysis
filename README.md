@@ -39,10 +39,9 @@ nyc-noise/
 ```
 
 ## Status (updated September 1, 2025)
-Adding an ETL pipeline using SQL
+Starting baseline time series forecast models (seasonal naive, SARIMA)
 
 ## Next Steps
-- Build baseline time series forecast models (seasonal naive, SARIMA)
 - Evaluate model accuracy and identify high-risk time windows
 - Create a Tableau dashboard for interactive exploration
 

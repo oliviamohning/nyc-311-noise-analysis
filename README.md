@@ -105,7 +105,7 @@ You can connect Tableau, Python, or other tools directly to these CSVs.
 PGUSER=your_pg_username python scripts/setup_db.py
 ```
 
-## Outputs & Visualizations
+## Sample Outputs & Visualizations
 
 ### Monthly Noise Complaint Trends (2024)
 ![Monthly Noise Trends](assets/monthly_noise_trends_2024.png)

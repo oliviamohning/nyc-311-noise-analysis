@@ -31,7 +31,6 @@ nyc-noise/
 ├── scripts/
 │   └── setup_db.py                   # Creates database + runs init_table.sql
 │
-├── requirements.txt                  # Python dependencies (pip)
 ├── environment.yml                   # Conda environment (alternative to requirements.txt)
 ├── LICENSE                           # Open-source license
 └── README.md                         # Project overview and instructions

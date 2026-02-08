@@ -62,6 +62,8 @@ This repository is intended as a demonstration of data cleaning, validation, exp
 This project uses PostgreSQL for data storage and Conda for environment management.  
 Follow the steps below to set up the environment, load the data, and generate the cleaned datasets.
 
+This setup script assumes PostgreSQL is installed locally and that the user can run createdb and psql without interactive password prompts. If PostgreSQL is not available, you can still run the Python notebook directly using the raw CSV.
+
 ### Prerequisites
 - PostgreSQL installed and accessible via `psql`
 - Conda (or Mamba) installed
@@ -82,7 +84,7 @@ Run the setup script to create the database, build tables, and load data:
 python scripts/setup_db.py
 ```
 
-This will:
+If PostgreSQL is available, this will:
 1. Create a database called `nyc_noise` if it does not already exist.  
 2. Run `sql/init_table.sql` to create two tables:  
    - `noise_complaints_2024` (raw, full schema)  
@@ -112,7 +114,7 @@ head data_processed/noise_complaints_clean_py.csv
 You can connect Tableau, Python, or other tools directly to these CSVs.  
 
 ### Notes
-- By default the script uses your system username as the Postgres user.  
+- By default the script uses PGUSER if set; otherwise it uses your OS username.  
 - To override, set the environment variable `PGUSER` before running the script:
 
 ```bash

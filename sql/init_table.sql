@@ -1,17 +1,12 @@
 -- init_table.sql
--- This script sets up tables for NYC noise complaints data
--- 1. Creates a full raw table (noise_complaints_2024) with all columns from the CSV
--- 2. Loads the raw CSV into that table
--- 3. Creates a clean table (noise_complaints_clean) with only the columns used for analysis
--- 4. Exports the clean table to CSV for use in Tableau or other tools
--- 5. Prints a sample of the clean table for verification
+-- Load raw NYC 311 noise complaint CSV into Postgres, create an analysis-ready table,
+-- export to CSV.
 
--- Remove the raw table if it already exists to avoid conflicts
-DROP TABLE IF EXISTS noise_complaints_2024;
+\set ON_ERROR_STOP on
 
--- Create the raw table with all columns from the CSV
--- Data types are chosen to match the expected contents:
---   BIGINT for IDs, TIMESTAMP for dates, DOUBLE PRECISION for coordinates, TEXT for everything else
+DROP TABLE IF EXISTS noise_complaints_2024 CASCADE;
+DROP TABLE IF EXISTS noise_complaints_clean CASCADE;
+
 CREATE TABLE noise_complaints_2024 (
     unique_key BIGINT,
     created_date TIMESTAMP,
@@ -56,27 +51,26 @@ CREATE TABLE noise_complaints_2024 (
     location TEXT
 );
 
--- Load the raw CSV into the raw table
 \copy noise_complaints_2024 FROM 'data_raw/311_noise_complaints_2024.csv' DELIMITER ',' CSV HEADER;
 
--- Remove the clean table if it exists so we can rebuild it
-DROP TABLE IF EXISTS noise_complaints_clean;
-
--- Create the clean table with only the columns needed for analysis
 CREATE TABLE noise_complaints_clean AS
 SELECT
+    unique_key,
     created_date,
+    closed_date,
     agency,
     complaint_type,
     descriptor,
     borough,
     latitude,
-    longitude,
-    location
+    longitude
 FROM noise_complaints_2024;
 
--- Export the cleaned table
+CREATE INDEX IF NOT EXISTS idx_noise_created_date ON noise_complaints_clean (created_date);
+CREATE INDEX IF NOT EXISTS idx_noise_borough ON noise_complaints_clean (borough);
+CREATE INDEX IF NOT EXISTS idx_noise_complaint_type ON noise_complaints_clean (complaint_type);
+
 \copy noise_complaints_clean TO 'data_processed/noise_complaints_clean_sql.csv' CSV HEADER;
 
--- Show a small sample of the clean table for quick verification
-SELECT * FROM noise_complaints_clean LIMIT 10;
+SELECT COUNT(*) AS row_count FROM noise_complaints_clean;
+SELECT * FROM noise_complaints_clean ORDER BY created_date NULLS LAST LIMIT 10;

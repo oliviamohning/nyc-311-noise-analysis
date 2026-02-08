@@ -8,7 +8,8 @@ repo_root = Path(__file__).resolve().parent.parent
 os.chdir(repo_root)
 
 # Settings
-DB_NAME = "nyc_noise"
+DB_NAME = os.getenv("DB_NAME", "nyc_noise")
+
 SQL_FILE = repo_root / "sql" / "init_table.sql"
 
 # Repo directories we expect to exist
@@ -25,17 +26,26 @@ REQUIRED_DIRS = [
 ]
 
 # Get user (fall back on OS username if PGUSER not set)
-DB_USER = os.getenv("PGUSER") or os.getenv("USERNAME") or "postgres"
+import getpass
+DB_USER = os.getenv("PGUSER") or getpass.getuser()
+
+
+def require_cmd(cmd):
+    if subprocess.call(f"command -v {cmd}", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL) != 0:
+        print(f"Required command not found: {cmd}")
+        sys.exit(1)
 
 def run_command(cmd):
-    """Run a shell command and exit on failure."""
+    print(f"> {cmd}")
     try:
         subprocess.run(cmd, check=True, shell=True)
-    except subprocess.CalledProcessError as e:
-        print(f"Command failed: {cmd}")
-        sys.exit(e.returncode)
+    except subprocess.CalledProcessError:
+        sys.exit(1)
 
 def main():
+    require_cmd("psql")
+    require_cmd("createdb")
+
     # 1. Ensure repo directories exist
     print("Ensuring repo directories exist...")
     for d in REQUIRED_DIRS:
@@ -48,7 +58,7 @@ def main():
 
     # 3. Create database if needed
     print(f"Creating database '{DB_NAME}' if it doesn't exist...")
-    run_command(f'createdb -U {DB_USER} {DB_NAME} 2> /dev/null || echo "Database {DB_NAME} already exists"')
+    run_command(f'createdb -U {DB_USER} {DB_NAME} || echo "Database {DB_NAME} already exists"')
 
     # 4. Run ETL SQL script
     print(f"Running ETL script: {SQL_FILE}")

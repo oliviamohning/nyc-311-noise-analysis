@@ -2,19 +2,28 @@
 
 <img src="assets/kermit.jpg" alt="Kermit Noise Complaint Meme" width="300" align="left" />
 
-This project analyzes NYC 311 noise complaint data to uncover spatial and temporal patterns and forecast future complaint volumes. By understanding when and where noise complaints are most likely to occur, city agencies can better allocate enforcement resources and address recurring problem areas. The goal is to help answer questions like:
-- When do most noise complaints occur?
-- Which boroughs report the most noise?
-- Are there seasonal or time-based trends?
-- Can we forecast complaint volume over time? By season? By location?
+This project analyzes NYC 311 noise complaint data to explore spatial and temporal reporting patterns and assess data quality considerations in large-scale civic datasets. The analysis focuses on understanding when and where noise complaints are reported, how reporting varies over time and location, and what limitations exist when interpreting historical complaint data.
 
-## Tools Used
-- Python (pandas, numpy, matplotlib, seaborn, scikit-learn) for data cleaning, exploration, and forecasting
-- SQL for querying, aggregating, and joining datasets
-- Jupyter Notebooks for exploratory analysis and model development
+This work is intended as an exploratory and analytical exercise, not as an operational or enforcement decision-making tool. Historical 311 complaint data reflects reporting behavior and access to services, which may vary across communities and over time, and should not be treated as a direct proxy for underlying incident rates.
+
+## Research questions include:
+- When do noise complaints tend to be reported?
+- How does reported complaint volume vary by borough and time of day?
+- Are there observable seasonal or temporal reporting patterns?
+- What limitations arise when using historical complaint data for trend analysis or forecasting?
+
+## Ethical and interpretive considerations
+This project explicitly avoids recommending enforcement actions or resource allocation strategies. During later graduate research on AI and predictive policing, I examined how using historical data to guide future enforcement decisions can reinforce existing biases and create feedback loops that disproportionately impact marginalized communities.
+
+As a result, forecasting and trend analysis in this repository are presented as methodological demonstrations and diagnostic tools rather than prescriptions for action. Any temporal models are included to illustrate analytical techniques and to highlight the uncertainty and limitations inherent in complaint-based data.
+
+## Tools used
+- Python (pandas, numpy, matplotlib, seaborn, scikit-learn) for data cleaning, exploratory analysis, and time series modeling.
+- SQL for querying, aggregating, joining, and validating structured data.
+- Jupyter Notebooks for transparent, reproducible analysis.
 
 ## Dataset
-NYC 311 Service Requests filtered to noise complaints (sample dataset: 311_noise_complaints_2024.csv). Includes date/time, complaint type, borough, and geolocation information.
+NYC 311 Service Requests filtered to noise complaints (sample dataset: 311_noise_complaints_2024.csv). Fields include date and time, complaint type, borough, and geolocation information.
 
 ## Repository Structure
 ```
@@ -38,12 +47,16 @@ nyc-noise/
 └── README.md                         # Project overview and instructions
 ```
 
-## Status (updated September 1, 2025)
-Starting baseline time series forecast models (seasonal naive, SARIMA)
+## Status (updated February 7, 2026)
+Baseline exploratory analysis and initial time series modeling to examine seasonality and reporting patterns. Forecasting components are included for methodological illustration and evaluation of model limitations.
 
-## Next Steps
-- Evaluate model accuracy and identify high-risk time windows
-- Create a Tableau dashboard for interactive exploration
+## Next steps
+- Expand data validation checks and summary tables.
+- Add written interpretation of observed patterns and known data limitations.
+- Create a simple dashboard for exploratory, non-operational visualization.
+
+## Notes on use
+This repository is intended as a demonstration of data cleaning, validation, exploratory analysis, and documentation practices in a public-sector context. Findings should be interpreted cautiously and within the broader social, demographic, and institutional factors that influence service request data.
 
 ## Getting Started
 This project uses PostgreSQL for data storage and Conda for environment management.  
